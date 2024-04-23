@@ -1,0 +1,9 @@
+Product:Manzana;Wholesaler Price:10.00;Stock:10;
+Product:Pera;Wholesaler Price:20.00;Stock:20;
+Product:Hamburguesa;Wholesaler Price:30.00;Stock:30;
+Product:Fresa;Wholesaler Price:5.00;Stock:20;
+Product:Sandía; Wholesaler Price:15.00; Stock:15;
+Product:Plátano; Wholesaler Price:12.00; Stock:25;
+Product:Uvas; Wholesaler Price:18.00; Stock:10;
+Product:Zanahoria; Wholesaler Price:3.00; Stock:50;
+Product:Melón; Wholesaler Price:25.00; Stock:12;

@@ -11,11 +11,12 @@ public class Product {
     
     static double EXPIRATION_RATE=0.60;
     
-	public Product(String name, double wholesalerPrice, boolean available, int stock) {
+	public Product(String name, double wholesalerPrice, double publicPrice, boolean available, int stock) {
 		super();
 		this.id = totalProducts+1;
 		this.name = name;
 		this.wholesalerPrice = wholesalerPrice;
+		this.publicPrice = publicPrice;
 		this.available = available;
 		this.stock = stock;
 		totalProducts++;
@@ -80,6 +81,14 @@ public class Product {
 	public void expire() {
 		this.publicPrice = this.getPublicPrice()*EXPIRATION_RATE;
 	}
+
+	@Override
+	public String toString() {
+		return "Product [name=" + name + ", publicPrice=" + publicPrice + ", wholesalerPrice=" + wholesalerPrice
+				+ ", stock=" + stock + "]";
+	}
+	
+	
 	
 	
 
