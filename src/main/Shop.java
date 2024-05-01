@@ -2,6 +2,7 @@ package main;
 
 import model.Product;
 import model.Sale;
+import view.LoginView;
 import model.Amount;
 import model.Client;
 import model.Employee;
@@ -107,26 +108,14 @@ public class Shop {
 	}
 	
 	public void initSession() {
-		Scanner sc = new Scanner(System.in);
-		Employee employee = new Employee();
-		boolean login = false;
-		
-		while (!login) {
-			System.out.print("Introduzca numero de empleado: ");
-			int employeeNumber = sc.nextInt();
-			System.out.print("Introduzca contraseña: ");
-			String password = sc.next();
-			
-			login = employee.login(employeeNumber, password);
-			
-			if (!login) {
-				System.out.println("Los datos son incorrectos. Reintentalo.");
-			} else {
-				System.out.println("Los datos introducidos son correctos!");
-			}
-		}
-	
+	    try {
+	        LoginView loginview = new LoginView();
+	        loginview.setVisible(true);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 	// Load initial inventory to shop
 	public void loadInventory() {
