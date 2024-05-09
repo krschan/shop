@@ -25,11 +25,12 @@ import java.awt.Insets;
 public class LoginView extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textfieldUser;
-	private JTextField textfieldPassword;
-	private JLabel lblNewLabel_1;
-	private JButton button;
+	private JPanel contentPanel;
+	private JTextField userTextField;
+	private JTextField passwordTextField;
+	private JLabel employeeLabel;
+	private JLabel passwordLabel;
+	private JButton loginButton;
 	private int counter = 0;
 
 	/**
@@ -53,62 +54,60 @@ public class LoginView extends JFrame implements ActionListener{
 	 */
 	public LoginView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBounds(500, 250, 400, 175);
+		contentPanel = new JPanel();
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{105, 45, 96, 85, 0};
-		gbl_contentPane.rowHeights = new int[]{21, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		setContentPane(contentPanel);
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[]{105, 45, 96, 85, 0};
+		gbl_contentPanel.rowHeights = new int[]{21, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		contentPanel.setLayout(gbl_contentPanel);
 		
-		JLabel lblNewLabel = new JLabel("Employee");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 2;
-		contentPane.add(lblNewLabel, gbc_lblNewLabel);
+		employeeLabel = new JLabel("Employee");
+		GridBagConstraints gbc_employeeLabel = new GridBagConstraints();
+		gbc_employeeLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_employeeLabel.gridx = 1;
+		gbc_employeeLabel.gridy = 2;
+		contentPanel.add(employeeLabel, gbc_employeeLabel);
 		
-		textfieldUser = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.anchor = GridBagConstraints.WEST;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridx = 2;
-		gbc_textField.gridy = 2;
-		contentPane.add(textfieldUser, gbc_textField);
-		textfieldUser.setColumns(10);
+		userTextField = new JTextField();
+		GridBagConstraints gbc_userTextField = new GridBagConstraints();
+		gbc_userTextField.anchor = GridBagConstraints.WEST;
+		gbc_userTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_userTextField.gridx = 2;
+		gbc_userTextField.gridy = 2;
+		contentPanel.add(userTextField, gbc_userTextField);
+		userTextField.setColumns(10);
 		
-		lblNewLabel_1 = new JLabel("Password");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 1;
-		gbc_lblNewLabel_1.gridy = 3;
-		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		passwordLabel = new JLabel("Password");
+		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
+		gbc_passwordLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_passwordLabel.gridx = 1;
+		gbc_passwordLabel.gridy = 3;
+		contentPanel.add(passwordLabel, gbc_passwordLabel);
 		
-		textfieldPassword = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 2;
-		gbc_textField_1.gridy = 3;
-		contentPane.add(textfieldPassword, gbc_textField_1);
-		textfieldPassword.setColumns(10);
+		passwordTextField = new JTextField();
+		GridBagConstraints gbc_passwordTextField = new GridBagConstraints();
+		gbc_passwordTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_passwordTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_passwordTextField.gridx = 2;
+		gbc_passwordTextField.gridy = 3;
+		contentPanel.add(passwordTextField, gbc_passwordTextField);
+		passwordTextField.setColumns(10);
 		
-		button = new JButton("Login");
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.insets = new Insets(0, 0, 5, 5);
-		gbc_button.fill = GridBagConstraints.HORIZONTAL;
-		gbc_button.anchor = GridBagConstraints.NORTH;
-		gbc_button.gridx = 2;
-		gbc_button.gridy = 5;
-		contentPane.add(button, gbc_button);
+		loginButton = new JButton("Login");
+		GridBagConstraints gbc_loginButton = new GridBagConstraints();
+		gbc_loginButton.insets = new Insets(0, 0, 5, 5);
+		gbc_loginButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_loginButton.anchor = GridBagConstraints.NORTH;
+		gbc_loginButton.gridx = 2;
+		gbc_loginButton.gridy = 5;
+		contentPanel.add(loginButton, gbc_loginButton);
 		
-		button.addActionListener(this);
+		loginButton.addActionListener(this);
 	
 	}
 	
@@ -126,8 +125,8 @@ public class LoginView extends JFrame implements ActionListener{
 			
 			while (!login) {
 				
-				int employeeNumber = Integer.parseInt(textfieldUser.getText());
-				String password = textfieldPassword.getText();
+				int employeeNumber = Integer.parseInt(userTextField.getText());
+				String password = passwordTextField.getText();
 				
 				login = employee.login(employeeNumber, password);
 				
@@ -141,8 +140,8 @@ public class LoginView extends JFrame implements ActionListener{
 				}
 			}
 			
-		} catch (LimitLoginException e) {
-			JOptionPane.showMessageDialog(LoginView.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (LimitLoginException limitLogin) {
+			JOptionPane.showMessageDialog(LoginView.this, limitLogin.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			dispose();
 		}
 		
@@ -150,7 +149,7 @@ public class LoginView extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == button) {
+		if (e.getSource() == loginButton) {
 			validLogin();
 		}
 		

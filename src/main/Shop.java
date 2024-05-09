@@ -468,5 +468,10 @@ public class Shop {
 	public void exit() {
 		System.out.println("Hasta luego usuario...");
 	}
+	
+	// Recover cash amount
+	public String recoverCash() {
+		return cash.toString();
+	}
 
 }
