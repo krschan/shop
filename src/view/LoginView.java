@@ -148,8 +148,8 @@ public class LoginView extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == loginButton) {
+	public void actionPerformed(ActionEvent interactionButton) {
+		if (interactionButton.getSource() == loginButton) {
 			validLogin();
 		}
 		
