@@ -125,8 +125,10 @@ public class LoginView extends JFrame implements ActionListener {
 				login = employee.login(employeeNumber, password);
 
 				if (!login) {
-					JOptionPane.showMessageDialog(this, "Error. Cuenta no válida." + counter);
+					JOptionPane.showMessageDialog(this, "Error. Cuenta no válida. Intentos: " + counter + "/3");
 					login = true;
+					userTextField.setText(null);
+					passwordTextField.setText(null);
 				} else {
 					dispose();
 					ShopView shopview = new ShopView();
