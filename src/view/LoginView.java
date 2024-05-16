@@ -29,6 +29,7 @@ public class LoginView extends JFrame implements ActionListener {
 	private JLabel passwordLabel;
 	private JButton loginButton;
 	private int counter = 0;
+	private int MAX_COUNTER = 3;
 
 	/**
 	 * Launch the application.
@@ -115,7 +116,7 @@ public class LoginView extends JFrame implements ActionListener {
 
 		try {
 			// It shows an error if user made 3 attempts
-			if (counter == 3 && !login) {
+			if (counter == MAX_COUNTER && !login) {
 				throw new LimitLoginException();
 			}
 
