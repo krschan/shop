@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -31,10 +30,10 @@ public class Shop {
 
 	public static void main(String[] args) {
 		Shop shop = new Shop();
-		
+
 		// Load inventory
 		shop.loadInventory();
-		
+
 		// Login employee
 		shop.initSession();
 
@@ -106,56 +105,55 @@ public class Shop {
 		} while (!exit);
 
 	}
-	
-	public void initSession() {
-	    try {
-	        LoginView loginview = new LoginView();
-	        loginview.setVisible(true);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
 
+	public void initSession() {
+		try {
+			LoginView loginview = new LoginView();
+			loginview.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// Load initial inventory to shop
 	public void loadInventory() {
 		try {
 			File file = new File("./files/inputInventory.txt");
-			
+
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String initialInventory = bufferedReader.readLine();
-			
-			while(initialInventory != null) {
-				
+
+			while (initialInventory != null) {
+
 				String[] line = initialInventory.split(";");
-				
+
 				// Product name
 				String split0 = line[0];
 				String[] productSplit = split0.split(":");
 				String name = productSplit[1];
-				
+
 				// Wholesaler price
 				String split1 = line[1];
 				String[] wholesalerSplit = split1.split(":");
 				float wholesalerPrice = Float.parseFloat(wholesalerSplit[1]);
-				
+
 				// Public price
 				float publicPrice = wholesalerPrice * 2;
-				
+
 				// Stock
 				String split2 = line[2];
 				String[] stockSplit = split2.split(":");
 				int stock = Integer.parseInt(stockSplit[1]);
-				
+
 				addProduct(new Product(name, wholesalerPrice, publicPrice, true, stock));
-				
+
 				initialInventory = bufferedReader.readLine();
-				
+
 			}
 			bufferedReader.close();
-			
-		} catch (java.io.IOException e){
+
+		} catch (java.io.IOException e) {
 			System.out.println("Ha habido un problema con el fichero.");
 		}
 	}
@@ -240,18 +238,18 @@ public class Shop {
 
 	// (CASE 6) make a sale of products to a client
 	public void sale() {
-		
+
 		// create date & time object
 		LocalDateTime dateTime = LocalDateTime.now();
-		
+
 		// temporalArray to save products
 		ArrayList<Product> products = new ArrayList<>();
 
-		// ask for client name	
+		// ask for client name
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Realizar venta, escribir nombre cliente");
 		String clientName = sc.nextLine();
-		
+
 		// create object client
 		Client clientBill = new Client(clientName);
 
@@ -295,14 +293,14 @@ public class Shop {
 
 		// add Sales to log sales
 		sales.add(new Sale(clientName, products, total, dateTime));
-		
+
 		clientBill.pay(totalAmount);
-		
+
 	}
 
 	// (CASE 7) show all sales
 	public void showSales() {
-		
+
 		boolean salesItems = false;
 
 		System.out.println("Lista de ventas:");
@@ -312,67 +310,66 @@ public class Shop {
 				salesItems = true;
 			}
 		}
-		
+
 		if (!salesItems) {
 			System.out.println("No hay ninguna venta.");
 		} else {
-			Scanner sc = new Scanner (System.in);
-			
+			Scanner sc = new Scanner(System.in);
+
 			System.out.println("Quieres escribir todas las ventas en un fichero?");
 			String choice = sc.next();
-			
-			
+
 			switch (choice) {
-			
+
 			case "si":
-				
+
 				try {
 					// Create date & time object
 					LocalDateTime dateTime = LocalDateTime.now();
-				    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				    String formattedDate = dateTime.format(myFormatObj); 
-				    
-				
+					DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+					String formattedDate = dateTime.format(myFormatObj);
+
 					// Export data to a file
 					File file = new File("files/sales_" + formattedDate + ".txt");
 					file.createNewFile();
 					FileWriter fileWriter = new FileWriter(file, true);
 					BufferedWriter writer = new BufferedWriter(fileWriter);
-					
+
 					int saleNumber = 1;
-					
-                    for (Sale sale : sales) {
-                        writer.write(saleNumber + ";" + sale.getClient() + ";" +
-                                "Date=" + sale.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + ";\n");
 
-                        StringBuilder products = new StringBuilder();
-                        for (Product product : sale.getProducts()) {
-                            products.append(product.getName()).append(",").append(product.getPublicPrice()).append("€;");
-                        }
-                        writer.write(saleNumber + ";Products=" + products + "\n");
+					for (Sale sale : sales) {
+						writer.write(saleNumber + ";" + sale.getClient() + ";" + "Date="
+								+ sale.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + ";\n");
 
-                        writer.write(saleNumber + ";Amount=" + sale.getAmount() + ";\n");
+						StringBuilder products = new StringBuilder();
+						for (Product product : sale.getProducts()) {
+							products.append(product.getName()).append(",").append(product.getPublicPrice())
+									.append("€;");
+						}
+						writer.write(saleNumber + ";Products=" + products + "\n");
 
-                        saleNumber++;
-                    }
-					
+						writer.write(saleNumber + ";Amount=" + sale.getAmount() + ";\n");
+
+						saleNumber++;
+					}
+
 					System.out.println("Las ventas han sido creadas en un fichero.");
 					writer.close();
 					break;
-					
+
 				} catch (java.io.IOException e) {
 					System.out.println("Ha habido un problema con el fichero.");
 				}
-			
+
 			case "no":
 				System.out.println("Las ventas no han sido creadas en un fichero.");
 				break;
-				
+
 			default:
 				System.out.println("Respuesta incorrecta.");
 				break;
 			}
-		}	
+		}
 	}
 
 	// (CASE 8) Total sales
@@ -468,10 +465,15 @@ public class Shop {
 	public void exit() {
 		System.out.println("Hasta luego usuario...");
 	}
-	
+
 	// Recover cash amount
 	public String recoverCash() {
 		return cash.toString();
+	}
+
+	// Save inventory
+	public ArrayList<Product> getInventory() {
+		return inventory;
 	}
 
 }

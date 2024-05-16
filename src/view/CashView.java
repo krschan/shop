@@ -11,28 +11,24 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import main.Shop;
-import model.Amount;
 
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
-public class CashView extends JDialog implements ActionListener{
+public class CashView extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton cancelButton;
 	private JButton okButton;
-	private JTextField cashTextField;
 	private JLabel cashLabel;
+	private Shop shop;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			CashView dialog = new CashView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,16 +37,18 @@ public class CashView extends JDialog implements ActionListener{
 	/**
 	 * Create the dialog.
 	 */
-	public CashView() {
+	public CashView(Shop shop) {
+		this.shop = shop;
+
 		setBounds(740, 200, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		
+
 		cashLabel = new JLabel();
 		contentPanel.add(cashLabel);
-		
+
 		cashAmount();
 		{
 			JPanel buttonPanel = new JPanel();
@@ -71,11 +69,10 @@ public class CashView extends JDialog implements ActionListener{
 			}
 		}
 	}
-	
+
 	public void cashAmount() {
-	    Shop shop = new Shop();
-	    String cashAmount = shop.recoverCash();
-	    cashLabel.setText("Dinero en caja: " + cashAmount);
+		String cashAmount = shop.recoverCash();
+		cashLabel.setText("Dinero en caja: " + cashAmount);
 	}
 
 	@Override
@@ -84,7 +81,7 @@ public class CashView extends JDialog implements ActionListener{
 			dispose();
 
 		}
-		
+
 	}
 
 }

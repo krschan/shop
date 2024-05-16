@@ -5,18 +5,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import main.Shop;
+import model.Product;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class ShopView extends JFrame implements ActionListener, KeyListener{
+public class ShopView extends JFrame implements ActionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -24,6 +26,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	private JButton addProductButton;
 	private JButton addStockButton;
 	private JButton deleteProductButton;
+	private Shop shop;
 
 	/**
 	 * Launch the application.
@@ -34,7 +37,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 				try {
 					ShopView frame = new ShopView();
 					frame.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,16 +49,15 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	 * Create the frame.
 	 */
 	public ShopView() {
-		
-		menuUI();
-		
-	}
-	
-	public void menuUI() {
-		Shop shop = new Shop();
+		this.shop = new Shop();
 		// Load inventory
 		shop.loadInventory();
-		
+		shop.showInventory();
+		menuUI();
+
+	}
+
+	public void menuUI() {
 		setFocusable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 200, 450, 300);
@@ -64,39 +66,38 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
-		
+
 		JLabel optionLabel = new JLabel("seleccione una opción:");
 		contentPane.add(optionLabel);
-		
+
 		showCashButton = new JButton("mostrar caja");
 		contentPane.add(showCashButton);
-		
+
 		addProductButton = new JButton("añadir producto");
 		contentPane.add(addProductButton);
-		
+
 		addStockButton = new JButton("añadir stock");
 		contentPane.add(addStockButton);
-		
+
 		deleteProductButton = new JButton("eliminar producto");
 		contentPane.add(deleteProductButton);
-		
+
 		showCashButton.addActionListener(this);
 		addProductButton.addActionListener(this);
 		addStockButton.addActionListener(this);
 		deleteProductButton.addActionListener(this);
-		
+
 		// detect when user uses a key on the frame.
 		this.addKeyListener(this);
 	}
-	
+
 	public void openCashView() {
-		CashView cashView = new CashView();
+		CashView cashView = new CashView(shop);
 		cashView.setVisible(true);
-	
+
 	}
-	
+
 	public void openProductView(int option) {
-		Shop shop = new Shop();
 		ProductView productView = new ProductView(option, shop);
 		productView.setVisible(true);
 	}
@@ -104,17 +105,15 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 		int key = e.getKeyCode();
-		
+
 		switch (key) {
-		
+
 		case KeyEvent.VK_1:
 			openCashView();
 			break;
@@ -133,7 +132,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -147,7 +146,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		} else if (interactionButtons.getSource() == deleteProductButton) {
 			openProductView(9);
 		}
-		
+
 	}
 
 }
