@@ -135,8 +135,13 @@ public class LoginView extends JFrame implements ActionListener {
 					shopview.setVisible(true);
 				}
 			}
-		} catch (LimitLoginException limitLogin) {
-			JOptionPane.showMessageDialog(LoginView.this, limitLogin.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (LimitLoginException limitLoginEx) {
+			// Show error dialog
+			JOptionPane.showMessageDialog(LoginView.this, limitLoginEx.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			dispose();
+		} catch (NumberFormatException numberFormatEx) {
+			// Show error dialog
+			JOptionPane.showMessageDialog(null, "Formato no correcto. Empleado tiene que ser numérico.", "Error", JOptionPane.ERROR_MESSAGE);
 			dispose();
 		}
 	}
