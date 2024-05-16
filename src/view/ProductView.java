@@ -176,7 +176,7 @@ public class ProductView extends JDialog implements ActionListener {
 				// Update stock product
 				product.setStock(stock + product.getStock());
 			} else {
-				JOptionPane.showMessageDialog(this, "Producto aun no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Producto no existe.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
 		} catch (NumberFormatException e) {
@@ -198,7 +198,7 @@ public class ProductView extends JDialog implements ActionListener {
 				inventory.remove(product);
 			} else {
 				// Error message
-				JOptionPane.showMessageDialog(this, "Producto aun no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Producto no existe.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
 		} catch (NumberFormatException e) {
