@@ -1,15 +1,41 @@
 package model;
 
+import java.sql.SQLException;
+
+import dao.Dao;
+import dao.DaoImplJDBC;
 import main.Logable;
 
 public class Employee extends Person implements Logable{
 	
-	private final static int USER = 123;
-	private final static String PASSWORD = "test";
+//	private final static int USER = 123;
+//	private final static String PASSWORD = "test";
 	
-	private int employeeId = USER;
+//	private int employeeId = USER;
+	
+	public Dao dao = new DaoImplJDBC();
+	
+	public Employee() {
+		
+	}
 
-    public boolean login(int user, String password) {
-        return user == USER && password.equals(PASSWORD);
+    public Employee(int user, String pw) {
+		
+	}
+
+	public boolean login(int user, String password) {
+		
+//        return user == USER && password.equals(PASSWORD);
+		
+		try {
+			dao.connect();
+			Employee employee = dao.getEmployee(user, password);
+			dao.disconnect();
+			return employee != null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
     }
 }
