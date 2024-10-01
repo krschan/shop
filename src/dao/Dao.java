@@ -16,6 +16,6 @@ public interface Dao {
 	
 	ArrayList<Product> getInventory();
 	
-	boolean writeInvetory(ArrayList<Product> inventory);
+	boolean writeInventory(ArrayList<Product> inventory);
 	
 }
