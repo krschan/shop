@@ -16,6 +16,9 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import dao.DaoImplFile;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,11 +31,17 @@ public class Shop {
 
 	final static double TAX_RATE = 1.04;
 
+	DaoImplFile dao = new DaoImplFile();
+
 	public static void main(String[] args) {
+
 		Shop shop = new Shop();
 
 		// Load inventory
-		shop.loadInventory();
+		// Change to read from files than hard-coding and the method is located in
+		// DaoImplFile
+		// shop.loadInventory(); (Comment this line so user can only see the inventory
+		// after is logged)
 
 		// Login employee
 		shop.initSession();
@@ -103,7 +112,6 @@ public class Shop {
 			}
 
 		} while (!exit);
-
 	}
 
 	public void initSession() {
@@ -117,45 +125,19 @@ public class Shop {
 
 	// Load initial inventory to shop
 	public void loadInventory() {
-		try {
-			File file = new File("./files/inputInventory.txt");
+		// addProduct(new Product("Manzana", new Amount(10.00), true, 10)) ....
+		// Change to read from files than hardcoding and the method is located in
+		// DaoImplFile
+		this.readInventory();
+	}
 
-			FileReader fileReader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			String initialInventory = bufferedReader.readLine();
+	public void readInventory() {
+		inventory = dao.getInventory();
+	}
 
-			while (initialInventory != null) {
-
-				String[] line = initialInventory.split(";");
-
-				// Product name
-				String split0 = line[0];
-				String[] productSplit = split0.split(":");
-				String name = productSplit[1];
-
-				// Wholesaler price
-				String split1 = line[1];
-				String[] wholesalerSplit = split1.split(":");
-				float wholesalerPrice = Float.parseFloat(wholesalerSplit[1]);
-
-				// Public price
-				float publicPrice = wholesalerPrice * 2;
-
-				// Stock
-				String split2 = line[2];
-				String[] stockSplit = split2.split(":");
-				int stock = Integer.parseInt(stockSplit[1]);
-
-				addProduct(new Product(name, wholesalerPrice, publicPrice, true, stock));
-
-				initialInventory = bufferedReader.readLine();
-
-			}
-			bufferedReader.close();
-
-		} catch (java.io.IOException e) {
-			System.out.println("Ha habido un problema con el fichero.");
-		}
+	public boolean writeInventory() {
+		dao.writeInventory(inventory);
+		return true;
 	}
 
 	// (CASE 1) show current total cash
@@ -314,62 +296,69 @@ public class Shop {
 		if (!salesItems) {
 			System.out.println("No hay ninguna venta.");
 		} else {
-			Scanner sc = new Scanner(System.in);
 
-			System.out.println("Quieres escribir todas las ventas en un fichero?");
-			String choice = sc.next();
+			this.writeSales();
 
-			switch (choice) {
+		}
+	}
 
-			case "si":
+	public void writeSales() {
 
-				try {
-					// Create date & time object
-					LocalDateTime dateTime = LocalDateTime.now();
-					DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-					String formattedDate = dateTime.format(myFormatObj);
+		Scanner sc = new Scanner(System.in);
 
-					// Export data to a file
-					File file = new File("files/sales_" + formattedDate + ".txt");
-					file.createNewFile();
-					FileWriter fileWriter = new FileWriter(file, true);
-					BufferedWriter writer = new BufferedWriter(fileWriter);
+		System.out.println("Quieres escribir todas las ventas en un fichero?");
+		String choice = sc.next();
 
-					int saleNumber = 1;
+		switch (choice) {
 
-					for (Sale sale : sales) {
-						writer.write(saleNumber + ";" + sale.getClient() + ";" + "Date="
-								+ sale.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + ";\n");
+		case "si":
 
-						StringBuilder products = new StringBuilder();
-						for (Product product : sale.getProducts()) {
-							products.append(product.getName()).append(",").append(product.getPublicPrice())
-									.append("€;");
-						}
-						writer.write(saleNumber + ";Products=" + products + "\n");
+			try {
+				// Create date & time object
+				LocalDateTime dateTime = LocalDateTime.now();
+				DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				String formattedDate = dateTime.format(myFormatObj);
 
-						writer.write(saleNumber + ";Amount=" + sale.getAmount() + ";\n");
+				// Export data to a file
+				File file = new File("files/sales_" + formattedDate + ".txt");
+				file.createNewFile();
+				FileWriter fileWriter = new FileWriter(file, true);
+				BufferedWriter writer = new BufferedWriter(fileWriter);
 
-						saleNumber++;
+				int saleNumber = 1;
+
+				for (Sale sale : sales) {
+					writer.write(saleNumber + ";" + sale.getClient() + ";" + "Date="
+							+ sale.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + ";\n");
+
+					StringBuilder products = new StringBuilder();
+					for (Product product : sale.getProducts()) {
+						products.append(product.getName()).append(",").append(product.getPublicPrice()).append("€;");
 					}
+					writer.write(saleNumber + ";Products=" + products + "\n");
 
-					System.out.println("Las ventas han sido creadas en un fichero.");
-					writer.close();
-					break;
+					writer.write(saleNumber + ";Amount=" + sale.getAmount() + ";\n");
 
-				} catch (java.io.IOException e) {
-					System.out.println("Ha habido un problema con el fichero.");
+					saleNumber++;
 				}
 
-			case "no":
-				System.out.println("Las ventas no han sido creadas en un fichero.");
+				System.out.println("Las ventas han sido creadas en un fichero.");
+				writer.close();
 				break;
 
-			default:
-				System.out.println("Respuesta incorrecta.");
-				break;
+			} catch (java.io.IOException e) {
+				System.out.println("Ha habido un problema con el fichero.");
 			}
+
+		case "no":
+			System.out.println("Las ventas no han sido creadas en un fichero.");
+			break;
+
+		default:
+			System.out.println("Respuesta incorrecta.");
+			break;
 		}
+
 	}
 
 	// (CASE 8) Total sales
