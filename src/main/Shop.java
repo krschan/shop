@@ -136,8 +136,7 @@ public class Shop {
 	}
 
 	public boolean writeInventory() {
-		dao.writeInventory(inventory);
-		return true;
+		return dao.writeInventory(inventory);
 	}
 
 	// (CASE 1) show current total cash
