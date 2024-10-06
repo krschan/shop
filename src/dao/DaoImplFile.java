@@ -89,21 +89,14 @@ public class DaoImplFile implements Dao {
 	public boolean writeInventory(ArrayList<Product> inventory) {
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Quieres escribir todas las ventas en un fichero?");
-		String choice = sc.next();
-
-		switch (choice) {
-
-		case "si":
-
 			try {
 				// Create date & time object
 				LocalDateTime dateTime = LocalDateTime.now();
-				DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-mm-dd");
 				String formattedDate = dateTime.format(myFormatObj);
 
 				// Export data to a file
-				File file = new File("files/sales_" + formattedDate + ".txt");
+				File file = new File("files/inventory_" + formattedDate + ".txt");
 				file.createNewFile();
 				FileWriter fileWriter = new FileWriter(file, true);
 				BufferedWriter writer = new BufferedWriter(fileWriter);
@@ -125,15 +118,6 @@ public class DaoImplFile implements Dao {
 				System.out.println("Ha habido un problema con el fichero.");
 				return false;
 			}
-
-		case "no":
-			System.out.println("Las ventas no han sido creadas en un fichero.");
-			return false;
-
-		default:
-			System.out.println("Respuesta incorrecta.");
-			return false;
-		}
 
 	}
 
