@@ -5,19 +5,15 @@ import model.Sale;
 import view.LoginView;
 import model.Amount;
 import model.Client;
-import model.Employee;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
-import dao.DaoImplFile;
+import dao.DaoImplXml;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +27,7 @@ public class Shop {
 
 	final static double TAX_RATE = 1.04;
 
-	DaoImplFile dao = new DaoImplFile();
+	DaoImplXml dao = new DaoImplXml();
 
 	public static void main(String[] args) {
 
@@ -40,6 +36,7 @@ public class Shop {
 		// Load inventory
 		// Change to read from files than hard-coding and the method is located in
 		// DaoImplFile
+
 		// shop.loadInventory(); (Comment this line so user can only see the inventory
 		// after is logged)
 
