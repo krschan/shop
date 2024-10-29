@@ -109,6 +109,8 @@ public class DaoImplFile implements Dao {
 
 					saleNumber++;
 				}
+				
+				writer.write("Número total de productos:" + saleNumber);
 
 				System.out.println("Las ventas han sido creadas en un fichero.");
 				writer.close();
