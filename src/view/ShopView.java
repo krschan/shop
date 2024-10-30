@@ -58,7 +58,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener {
 		this.shop = new Shop();
 		// Load inventory
 		shop.loadInventory();
-		shop.showInventory();
+		shop.showInventory(); // check inventory
 		menuUI();
 
 	}
@@ -111,10 +111,9 @@ public class ShopView extends JFrame implements ActionListener, KeyListener {
 	public void exportInventory() {
 		if(!shop.writeInventory()) {
 			JOptionPane.showMessageDialog(this, "Error exportando el inventario.", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
+		} else {
+			JOptionPane.showMessageDialog(this, "Inventario exportado correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 		}
-		JOptionPane.showMessageDialog(this, "Inventario exportado correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-		
 	}
 
 	public void openCashView() {
