@@ -8,11 +8,11 @@ import model.Product;
 
 public interface Dao {
 
-	void connect() throws SQLException;
+	void connect();
 
 	Employee getEmployee(int user, String pw);
 
-	void disconnect() throws SQLException;
+	void disconnect();
 
 	ArrayList<Product> getInventory();
 
