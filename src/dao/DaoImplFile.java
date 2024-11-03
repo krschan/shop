@@ -5,16 +5,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import main.Shop;
 import model.Employee;
 import model.Product;
-import model.Sale;
 
 public class DaoImplFile implements Dao {
 
@@ -38,11 +35,11 @@ public class DaoImplFile implements Dao {
 
 	@Override
 	public ArrayList<Product> getInventory() {
-		
+
 		ArrayList<Product> inventory = new ArrayList<Product>();
-		
+
 		try {
-			
+
 			File file = new File("./files/inputInventory.txt");
 
 			FileReader fileReader = new FileReader(file);
@@ -52,7 +49,7 @@ public class DaoImplFile implements Dao {
 			while (initialInventory != null) {
 
 				String[] line = initialInventory.split(";");
-				
+
 				// Product name
 				String split0 = line[0];
 				String[] productSplit = split0.split(":");
@@ -89,38 +86,37 @@ public class DaoImplFile implements Dao {
 	public boolean writeInventory(ArrayList<Product> inventory) {
 		Scanner sc = new Scanner(System.in);
 
-			try {
-				// Create date & time object
-				LocalDateTime dateTime = LocalDateTime.now();
-				DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-				String formattedDate = dateTime.format(myFormatObj);
+		try {
+			// Create date & time object
+			LocalDateTime dateTime = LocalDateTime.now();
+			DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Cambié "mm" a "MM" para meses
+			String formattedDate = dateTime.format(myFormatObj);
 
-				// Export data to a file
-				File file = new File("files/inventory_" + formattedDate + ".txt");
-				file.createNewFile();
-				FileWriter fileWriter = new FileWriter(file, true);
-				BufferedWriter writer = new BufferedWriter(fileWriter);
+			// Export data to a file
+			File file = new File("files/inventory_" + formattedDate + ".txt");
+			file.createNewFile();
+			FileWriter fileWriter = new FileWriter(file, true);
+			BufferedWriter writer = new BufferedWriter(fileWriter);
 
-				int saleNumber = 1;
+			int productNumber = 1;
 
-				for (Product product : inventory) {
-					writer.write(
-							saleNumber + ";Product:" + product.getName() + ";" + "Stock:" + product.getStock() + ";\n");
+			for (Product product : inventory) {
+				writer.write(
+						productNumber + ";Product:" + product.getName() + ";" + "Stock:" + product.getStock() + ";\n");
 
-					saleNumber++;
-				}
-				
-				writer.write("Número total de productos:" + saleNumber);
-
-				System.out.println("Las ventas han sido creadas en un fichero.");
-				writer.close();
-				return true;
-
-			} catch (java.io.IOException e) {
-				System.out.println("Ha habido un problema con el fichero.");
-				return false;
+				productNumber++; // Cambié saleNumber a productNumber
 			}
 
+			writer.write("Número total de productos:" + productNumber); // Cambié saleNumber a productNumber
+
+			System.out.println("El inventario ha sido creado en un fichero."); // Cambié "ventas" a "inventario"
+			writer.close();
+			return true;
+
+		} catch (java.io.IOException e) {
+			System.out.println("Ha habido un problema con el fichero.");
+			return false;
+		}
 	}
 
 }
