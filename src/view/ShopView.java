@@ -5,14 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import main.Shop;
-import model.Product;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -20,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.DropMode;
 
 public class ShopView extends JFrame implements ActionListener, KeyListener {
 
