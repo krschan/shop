@@ -1,5 +1,12 @@
 package model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name="product")
+@XmlType(propOrder= {"name","wholesalerPrice","publicPrice", "available", "stock", "badge"})
 public class Product {
 	private int id;
 	private String name;
@@ -9,20 +16,26 @@ public class Product {
 	private boolean available;
 	private int stock;
 	private static int totalProducts;
+	private int total;
 
 	static double EXPIRATION_RATE = 0.60;
+	
+	public Product() {
+		
+	}
 
 	public Product(String name, double wholesalerPrice, double publicPrice, boolean available, int stock) {
 		super();
 		this.id = totalProducts + 1;
 		this.name = name;
 		this.wholesalerPrice = wholesalerPrice;
-		this.publicPrice = publicPrice;
+		this.publicPrice = wholesalerPrice * 2;
 		this.available = available;
 		this.stock = stock;
 		totalProducts++;
 	}
 
+	@XmlAttribute(name="id")
 	public int getId() {
 		return id;
 	}
@@ -31,6 +44,7 @@ public class Product {
 		this.id = id;
 	}
 
+	@XmlAttribute(name="name")
 	public String getName() {
 		return name;
 	}
@@ -38,7 +52,7 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public double getPublicPrice() {
 		return publicPrice;
 	}
@@ -47,6 +61,7 @@ public class Product {
 		this.publicPrice = publicPrice;
 	}
 
+	@XmlElement(name="wholesalerPrice")
 	public double getWholesalerPrice() {
 		return wholesalerPrice;
 	}
@@ -71,6 +86,7 @@ public class Product {
 		this.available = available;
 	}
 
+	@XmlElement(name="stock")
 	public int getStock() {
 		return stock;
 	}
@@ -89,6 +105,15 @@ public class Product {
 
 	public void expire() {
 		this.publicPrice = this.getPublicPrice() * EXPIRATION_RATE;
+	}
+	
+	@XmlAttribute(name="total")
+	public int getTotal() {
+		return total;
+	}
+	
+	public void setTotal(int total) {
+		this.total = total;
 	}
 
 	@Override

@@ -11,7 +11,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import dao.DaoImplXml;
+
+import dao.DaoImplJaxb;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -24,7 +25,7 @@ public class Shop {
 
 	final static double TAX_RATE = 1.04;
 
-	DaoImplXml dao = new DaoImplXml();
+	DaoImplJaxb daoJaxb = new DaoImplJaxb();
 
 	public static void main(String[] args) {
 		Shop shop = new Shop();
@@ -33,7 +34,7 @@ public class Shop {
 		// The method is located in DaoImplFile.
 
 		// shop.loadInventory();
-		// Commented out to test of if inventory was loaded correctly.
+		// Commented out to test if inventory was loaded correctly.
 
 		// Login employee
 		shop.initSession();
@@ -114,11 +115,11 @@ public class Shop {
 	}
 
 	public void readInventory() {
-		inventory = dao.getInventory();
+		inventory = daoJaxb.getInventory();
 	}
 
 	public boolean writeInventory() {
-		return dao.writeInventory(inventory);
+		return daoJaxb.writeInventory(inventory);
 	}
 
 	// (CASE 1) Display current total cash
