@@ -41,7 +41,7 @@ public class SaxReader extends DefaultHandler {
 					0, false, 0);
 			break;
 		case "price":
-			this.product.setBadge(attributes.getValue("badge"));
+			this.product.setBadge(attributes.getValue("currency"));
 			break;
 		case "stock":
 			break;
