@@ -40,7 +40,7 @@ public class SaxReader extends DefaultHandler {
 			this.product = new Product(attributes.getValue("name") != null ? attributes.getValue("name") : "empty", 0,
 					0, false, 0);
 			break;
-		case "price":
+		case "wholesalerPrice":
 			this.product.setBadge(attributes.getValue("currency"));
 			break;
 		case "stock":
@@ -55,7 +55,7 @@ public class SaxReader extends DefaultHandler {
 		switch (parsedElement) {
 		case "product":
 			break;
-		case "price":
+		case "wholesalerPrice":
 			this.product.setWholesalerPrice(Float.valueOf(value));
 			break;
 		case "stock":
