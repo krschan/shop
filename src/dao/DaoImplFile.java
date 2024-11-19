@@ -89,7 +89,7 @@ public class DaoImplFile implements Dao {
 		try {
 			// Create date & time object
 			LocalDateTime dateTime = LocalDateTime.now();
-			DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Cambié "mm" a "MM" para meses
+			DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String formattedDate = dateTime.format(myFormatObj);
 
 			// Export data to a file
@@ -104,12 +104,11 @@ public class DaoImplFile implements Dao {
 				writer.write(
 						productNumber + ";Product:" + product.getName() + ";" + "Stock:" + product.getStock() + ";\n");
 
-				productNumber++; // Cambié saleNumber a productNumber
+				productNumber++;
 			}
 
-			writer.write("Número total de productos:" + productNumber); // Cambié saleNumber a productNumber
-
-			System.out.println("El inventario ha sido creado en un fichero."); // Cambié "ventas" a "inventario"
+			writer.write("Número total de productos:" + productNumber);
+			System.out.println("El inventario ha sido creado en un fichero.");
 			writer.close();
 			return true;
 
