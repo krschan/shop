@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import model.Employee;
 import model.Product;
-import main.Shop;
 
 public class DaoImplJDBC implements Dao {
 	
