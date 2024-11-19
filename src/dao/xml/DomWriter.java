@@ -43,7 +43,7 @@ public class DomWriter {
 		// PARENT NODE
 		// root node
 		Element products = document.createElement("products");
-		products.setAttribute("total", Integer.toString(inventory.size()));
+		products.setAttribute("total", Integer.toString(Product.getTotalProducts()));
 		document.appendChild(products);
 
 		for (Product product : inventory) {
