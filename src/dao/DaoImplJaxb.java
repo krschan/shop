@@ -6,6 +6,7 @@ import dao.jaxb.JaxbMarshaller;
 import dao.jaxb.JaxbUnMarshaller;
 import model.Employee;
 import model.Product;
+import model.ProductList;
 
 public class DaoImplJaxb implements Dao {
 
@@ -29,8 +30,16 @@ public class DaoImplJaxb implements Dao {
 
 	@Override
 	public ArrayList<Product> getInventory() {
-		(new JaxbUnMarshaller()).init();
-		return null;
+	    ProductList productList = (new JaxbUnMarshaller()).init();
+	    
+	    // Check if the product list is not null.
+	    if (productList != null) {
+	    	// Return the list of products if available.
+	        return productList.getProducts();
+	    } else {
+	    	// Return an empty ArrayList if the list is null.
+	        return new ArrayList<>();
+	    }
 	}
 
 	@Override

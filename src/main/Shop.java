@@ -188,7 +188,7 @@ public class Shop {
 
 		for (Product product : inventory) {
 			if (product != null) {
-				System.out.println(product.getName() + ", " + product.getWholesalerPrice() + ", Public Price: "
+				System.out.println(product.getName() + ", Wholesaler Price: " + product.getWholesalerPrice() + ", Public Price: "
 						+ product.getPublicPrice() + ", Available: " + product.isAvailable() + ", Stock: "
 						+ product.getStock());
 			}

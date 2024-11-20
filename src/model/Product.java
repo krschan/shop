@@ -29,7 +29,7 @@ public class Product {
 		this.id = totalProducts + 1;
 		this.name = name;
 		this.wholesalerPrice = wholesalerPrice;
-		this.publicPrice = wholesalerPrice * 2;
+		this.publicPrice = publicPrice;
 		this.available = available;
 		this.stock = stock;
 		totalProducts++;
@@ -115,7 +115,15 @@ public class Product {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-
+	
+	public void publicPriceCalculate() {
+	    // Check if wholesalerPrice is not zero
+	    if (this.wholesalerPrice > 0) {
+	        this.publicPrice = this.wholesalerPrice * 2;
+	    } else {
+	        System.out.println("WholesalerPrice is null or not set");
+	    }
+	}
 	@Override
 	public String toString() {
 		return "Product [name=" + name + ", publicPrice=" + publicPrice + ", wholesalerPrice=" + wholesalerPrice
