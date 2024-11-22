@@ -175,8 +175,8 @@ public class Shop {
 		Product product = findProduct(name);
 
 		if (product != null) {
-			double newPublicPrice = 0.6 * product.getPublicPrice(); // Reduce price by 40% due to impending expiration
-			product.setPublicPrice(newPublicPrice);
+			double publicPriceExpired = 0.6 * product.getPublicPrice().getValue(); // Reduce price by 40% due to impending expiration
+			product.setPublicPrice(new Amount (publicPriceExpired));
 			System.out.println(
 					"The public price for product " + name + " has been updated to " + product.getPublicPrice());
 		}
@@ -188,9 +188,9 @@ public class Shop {
 
 		for (Product product : inventory) {
 			if (product != null) {
-				System.out.println(product.getName() + ", Wholesaler Price: " + product.getWholesalerPrice() + ", Public Price: "
-						+ product.getPublicPrice() + ", Available: " + product.isAvailable() + ", Stock: "
-						+ product.getStock());
+				System.out.println(product.getName() + ", Wholesaler Price: " + product.getWholesalerPrice()
+						+ ", Public Price: " + product.getPublicPrice() + ", Available: " + product.isAvailable()
+						+ ", Stock: " + product.getStock());
 			}
 		}
 	}
@@ -227,7 +227,7 @@ public class Shop {
 			if (product != null && product.isAvailable()) {
 				products.add(product);
 				productAvailable = true;
-				total += product.getPublicPrice();
+				total += product.getPublicPrice().getValue();
 				product.setStock(product.getStock() - 1);
 				// If no more stock, mark as unavailable for sale
 				if (product.getStock() == 0) {

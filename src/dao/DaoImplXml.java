@@ -10,6 +10,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+import dao.xml.DomWriter;
 import model.Employee;
 import model.Product;
 
@@ -59,7 +60,7 @@ public class DaoImplXml implements Dao{
 	@Override
 	public boolean writeInventory(ArrayList<Product> inventory) {
 		//Create a new xml document
-	    dao.xml.DomWriter domWriter = new dao.xml.DomWriter();
+	    DomWriter domWriter = new DomWriter();
 	    boolean success = domWriter.generateDocument(inventory);
 	    return success;
 	}

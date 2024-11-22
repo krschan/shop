@@ -13,7 +13,7 @@ public class DaoImplJaxb implements Dao {
 	@Override
 	public void connect() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -25,27 +25,32 @@ public class DaoImplJaxb implements Dao {
 	@Override
 	public void disconnect() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public ArrayList<Product> getInventory() {
-	    ProductList productList = (new JaxbUnMarshaller()).init();
-	    
-	    // Check if the product list is not null.
-	    if (productList != null) {
-	    	// Return the list of products if available.
-	        return productList.getProducts();
-	    } else {
-	    	// Return an empty ArrayList if the list is null.
-	        return new ArrayList<>();
-	    }
+		ProductList productList = (new JaxbUnMarshaller()).init();
+
+		// Check if the product list is not null.
+		if (productList != null) {
+			// Return the list of products if available.
+			return productList.getProducts();
+		} else {
+			// Return an empty ArrayList if the list is null.
+			return new ArrayList<>();
+		}
 	}
 
 	@Override
 	public boolean writeInventory(ArrayList<Product> inventory) {
-		(new JaxbMarshaller()).init();
-		return false;
+		JaxbMarshaller jaxbMarshaller = new JaxbMarshaller();
+		ProductList productList = new ProductList();
+		
+		productList.setProducts(inventory);
+		boolean success = jaxbMarshaller.init(productList);
+		
+		return success;
 	}
 
 }

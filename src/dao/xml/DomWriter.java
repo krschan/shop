@@ -62,7 +62,7 @@ public class DomWriter {
 			// child price into product with attribute and content
 			Element price = document.createElement("price");
 			price.setAttribute("currency", "€");
-			price.setTextContent(Double.toString(product.getWholesalerPrice()));
+			price.setTextContent(Double.toString(product.getWholesalerPrice().getValue()));
 			item.appendChild(price);
 
 			// child stock into product with content

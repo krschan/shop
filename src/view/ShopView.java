@@ -55,7 +55,8 @@ public class ShopView extends JFrame implements ActionListener, KeyListener {
 		this.shop = new Shop();
 		// Load inventory
 		shop.loadInventory();
-		shop.showInventory(); // check inventory
+		// Check inventory
+		shop.showInventory();
 		menuUI();
 
 	}

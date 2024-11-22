@@ -8,7 +8,6 @@ public class Sale extends Object {
 	private Client client;
 	private ArrayList<Product> products = new ArrayList<>();
 	private double amount;
-	private static double totalSale;
 	private LocalDateTime date;
 	
 	

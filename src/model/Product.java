@@ -5,37 +5,35 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="product")
-@XmlType(propOrder= {"name","wholesalerPrice","publicPrice", "available", "stock", "badge"})
+@XmlRootElement(name = "product")
+@XmlType(propOrder = { "id", "name", "available", "wholesalerPrice", "publicPrice", "stock" })
 public class Product {
 	private int id;
 	private String name;
-	private String badge;
-	private double publicPrice;
-	private double wholesalerPrice;
+	private Amount publicPrice;
+	private Amount wholesalerPrice;
 	private boolean available;
 	private int stock;
 	private static int totalProducts;
-	private int total;
 
 	static double EXPIRATION_RATE = 0.60;
-	
+
 	public Product() {
-		
+
 	}
 
 	public Product(String name, double wholesalerPrice, double publicPrice, boolean available, int stock) {
 		super();
 		this.id = totalProducts + 1;
 		this.name = name;
-		this.wholesalerPrice = wholesalerPrice;
-		this.publicPrice = publicPrice;
+		this.wholesalerPrice = new Amount(wholesalerPrice);
+		this.publicPrice = new Amount(publicPrice);
 		this.available = available;
 		this.stock = stock;
 		totalProducts++;
 	}
 
-	@XmlAttribute(name="id")
+	@XmlAttribute(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -44,7 +42,7 @@ public class Product {
 		this.id = id;
 	}
 
-	@XmlAttribute(name="name")
+	@XmlAttribute(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -52,30 +50,23 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public double getPublicPrice() {
+
+	@XmlElement(name = "publicPrice")
+	public Amount getPublicPrice() {
 		return publicPrice;
 	}
 
-	public void setPublicPrice(double publicPrice) {
+	public void setPublicPrice(Amount publicPrice) {
 		this.publicPrice = publicPrice;
 	}
 
-	@XmlElement(name="wholesalerPrice")
-	public double getWholesalerPrice() {
+	@XmlElement(name = "wholesalerPrice")
+	public Amount getWholesalerPrice() {
 		return wholesalerPrice;
 	}
 
-	public void setWholesalerPrice(double wholesalerPrice) {
+	public void setWholesalerPrice(Amount wholesalerPrice) {
 		this.wholesalerPrice = wholesalerPrice;
-	}
-
-	public String getBadge() {
-		return badge;
-	}
-
-	public void setBadge(String badge) {
-		this.badge = badge;
 	}
 
 	public boolean isAvailable() {
@@ -86,7 +77,7 @@ public class Product {
 		this.available = available;
 	}
 
-	@XmlElement(name="stock")
+	@XmlElement(name = "stock")
 	public int getStock() {
 		return stock;
 	}
@@ -104,26 +95,19 @@ public class Product {
 	}
 
 	public void expire() {
-		this.publicPrice = this.getPublicPrice() * EXPIRATION_RATE;
+		double valueExpire = this.getPublicPrice().getValue() * EXPIRATION_RATE;
+		this.publicPrice.setValue(valueExpire);
 	}
-	
-	@XmlAttribute(name="total")
-	public int getTotal() {
-		return total;
-	}
-	
-	public void setTotal(int total) {
-		this.total = total;
-	}
-	
+
 	public void publicPriceCalculate() {
-	    // Check if wholesalerPrice is not zero
-	    if (this.wholesalerPrice > 0) {
-	        this.publicPrice = this.wholesalerPrice * 2;
-	    } else {
-	        System.out.println("WholesalerPrice is null or not set");
-	    }
+		// Check if wholesalerPrice is not zero
+		if (this.wholesalerPrice != null) {
+			this.publicPrice = new Amount(this.wholesalerPrice.getValue() * 2);
+		} else {
+			System.out.println("WholesalerPrice is null or not set");
+		}
 	}
+
 	@Override
 	public String toString() {
 		return "Product [name=" + name + ", publicPrice=" + publicPrice + ", wholesalerPrice=" + wholesalerPrice

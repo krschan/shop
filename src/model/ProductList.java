@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProductList {
 	private int total;
 	
-	private ArrayList<Product> products = new ArrayList<>();  // Initialize products	
+	private ArrayList<Product> products = new ArrayList<>();	
 	  
 	
 	public void setProducts(ArrayList<Product> products) {

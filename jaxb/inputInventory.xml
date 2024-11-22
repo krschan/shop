@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <products>
 	<product name="manzana">
-		<wholesalerPrice badge="Euro">10.00</wholesalerPrice>
+		<wholesalerPrice currency="Euro">10.00</wholesalerPrice>
 		<stock>10</stock>
 	</product>
 	<product name="pera">
-		<wholesalerPrice badge="Euro">20.00</wholesalerPrice>
+		<wholesalerPrice currency="Euro">20.00</wholesalerPrice>
 		<stock>20</stock>
 	</product>
 </products>

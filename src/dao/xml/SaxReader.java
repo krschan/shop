@@ -6,6 +6,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import model.Amount;
 import model.Product;
 
 public class SaxReader extends DefaultHandler {
@@ -41,7 +42,6 @@ public class SaxReader extends DefaultHandler {
 					0, false, 0);
 			break;
 		case "wholesalerPrice":
-			this.product.setBadge(attributes.getValue("currency"));
 			break;
 		case "stock":
 			break;
@@ -56,8 +56,8 @@ public class SaxReader extends DefaultHandler {
 		case "product":
 			break;
 		case "wholesalerPrice":
-			this.product.setWholesalerPrice(Float.valueOf(value));
-			this.product.setPublicPrice(this.product.getWholesalerPrice());
+			this.product.setWholesalerPrice(new Amount(Float.valueOf(value)));
+			this.product.setPublicPrice(new Amount(this.product.getWholesalerPrice().getValue()));
 			break;
 		case "stock":
 			this.product.setStock(Integer.valueOf(value));
