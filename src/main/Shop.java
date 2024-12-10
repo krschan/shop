@@ -25,7 +25,15 @@ public class Shop {
 
 	final static double TAX_RATE = 1.04;
 
-	DaoImplJaxb daoJaxb = new DaoImplJaxb();
+	// Connection using Jaxb.
+	DaoImplJaxb dao = new DaoImplJaxb();
+	
+	// Connection using File.
+	// private Dao dao = new DaoImplFile();
+	
+	// Connection using Xml.
+	// private Dao dao = new DaoImplXml();
+	
 
 	public static void main(String[] args) {
 		Shop shop = new Shop();
