@@ -33,6 +33,16 @@ public class Product {
 		totalProducts++;
 	}
 
+	// JDBC.
+	public Product(int id, String name, double wholesalerPrice, boolean available, int stock) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.wholesalerPrice = new Amount(wholesalerPrice);
+		this.available = available;
+		this.stock = stock;
+	}
+
 	@XmlAttribute(name = "id")
 	public int getId() {
 		return id;
