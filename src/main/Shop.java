@@ -12,7 +12,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import dao.DaoImplJaxb;
+import dao.Dao;
+import dao.DaoImplJDBC;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,8 +26,11 @@ public class Shop {
 
 	final static double TAX_RATE = 1.04;
 
+	// Connection using JDBC.
+	private Dao dao = new DaoImplJDBC();
+	
 	// Connection using Jaxb.
-	DaoImplJaxb dao = new DaoImplJaxb();
+	// private Dao dao = new DaoImplJaxb();
 	
 	// Connection using File.
 	// private Dao dao = new DaoImplFile();
@@ -123,11 +127,11 @@ public class Shop {
 	}
 
 	public void readInventory() {
-		inventory = daoJaxb.getInventory();
+		inventory = dao.getInventory();
 	}
 
 	public boolean writeInventory() {
-		return daoJaxb.writeInventory(inventory);
+		return dao.writeInventory(inventory);
 	}
 
 	// (CASE 1) Display current total cash

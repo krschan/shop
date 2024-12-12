@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Employee;
@@ -16,5 +17,13 @@ public interface Dao {
 	ArrayList<Product> getInventory();
 
 	boolean writeInventory(ArrayList<Product> inventory);
+	
+	void insert(Product product);
+	
+	void update(String id);
+	
+	void delete(String id);
+	
+	boolean exists(int id, Statement stmt);
 
 }
