@@ -28,16 +28,15 @@ public class Shop {
 
 	// Connection using JDBC.
 	private Dao dao = new DaoImplJDBC();
-	
+
 	// Connection using Jaxb.
 	// private Dao dao = new DaoImplJaxb();
-	
+
 	// Connection using File.
 	// private Dao dao = new DaoImplFile();
-	
+
 	// Connection using Xml.
 	// private Dao dao = new DaoImplXml();
-	
 
 	public static void main(String[] args) {
 		Shop shop = new Shop();
@@ -122,7 +121,6 @@ public class Shop {
 	// Load initial inventory into the shop
 	public void loadInventory() {
 		// Implement file reading for inventory instead of hardcoding.
-		// The method is located in DaoImplFile.
 		this.readInventory();
 	}
 
@@ -130,6 +128,7 @@ public class Shop {
 		inventory = dao.getInventory();
 	}
 
+	// Write/Export inventory.
 	public boolean writeInventory() {
 		return dao.writeInventory(inventory);
 	}
@@ -172,10 +171,16 @@ public class Shop {
 			int stock = sc.nextInt();
 			// Update product stock
 			product.setStock(stock + product.getStock());
+
 			System.out.println("The stock for product " + name + " has been updated to " + product.getStock());
 		} else {
 			System.out.println("No product found with the name " + name);
 		}
+	}
+
+	// Method used to add stock in the database
+	public void updateProduct(Product product) {
+		dao.updateProduct(product);
 	}
 
 	// (CASE 4) Mark a product as expired
@@ -187,8 +192,9 @@ public class Shop {
 		Product product = findProduct(name);
 
 		if (product != null) {
-			double publicPriceExpired = 0.6 * product.getPublicPrice().getValue(); // Reduce price by 40% due to impending expiration
-			product.setPublicPrice(new Amount (publicPriceExpired));
+			double publicPriceExpired = 0.6 * product.getPublicPrice().getValue(); // Reduce price by 40% due to
+																					// impending expiration
+			product.setPublicPrice(new Amount(publicPriceExpired));
 			System.out.println(
 					"The public price for product " + name + " has been updated to " + product.getPublicPrice());
 		}
@@ -366,6 +372,11 @@ public class Shop {
 		}
 	}
 
+	// Method used to delete product in the database
+	public void deleteProduct(int productId) {
+		dao.deleteProduct(productId);
+	}
+
 	// Add a sale to the log
 	public void addSales(Sale customer) {
 		if (isSalesFull()) {
@@ -393,7 +404,11 @@ public class Shop {
 			return;
 		}
 
+		// Add in the array.
 		inventory.add(product);
+
+		// Add in the database.
+		dao.addProduct(product);
 	}
 
 	// Check if inventory limit is reached
