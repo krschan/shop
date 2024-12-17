@@ -101,7 +101,7 @@ public class Product {
 		return totalProducts;
 	}
 
-	public static void setTotalProducts(int totalProducts) {
+	public void setTotalProducts(int totalProducts) {
 		Product.totalProducts = totalProducts;
 	}
 

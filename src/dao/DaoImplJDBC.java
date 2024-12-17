@@ -81,6 +81,10 @@ public class DaoImplJDBC implements Dao {
 					product.add(new Product(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBoolean(4),
 							rs.getInt(5)));
 				}
+
+				// Set the total product of the database in Product.
+				Product totalProduct = new Product();
+				totalProduct.setTotalProducts(product.size());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
