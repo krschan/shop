@@ -9,11 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Employee;
-import model.Person;
 import model.Product;
 
 public class DaoImplJDBC implements Dao {
-	
+
 	public DaoImplJDBC() {
 		connect();
 	}
@@ -39,26 +38,25 @@ public class DaoImplJDBC implements Dao {
 
 	@Override
 	public Employee getEmployee(int user, String pw) {
-	    Employee employee = null;
-	    // Prepare query.
-	    String query = GET_EMPLOYEE + " WHERE employeeId = ? AND password = ?";
+		Employee employee = null;
+		// Prepare query.
+		String query = GET_EMPLOYEE + " WHERE employeeId = ? AND password = ?";
 
-	    try (PreparedStatement ps = connection.prepareStatement(query)) {
-	        // Set parameters for employeeId and password.
-	        ps.setInt(1, user);
-	        ps.setString(2, pw);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) {
-	                employee = new Employee(user, pw);
-	            }
-	        }
-	    } catch (SQLException e) {
-	        // Handle SQL error.
-	        e.printStackTrace();
-	    }
-	    return employee;
+		try (PreparedStatement ps = connection.prepareStatement(query)) {
+			// Set parameters for employeeId and password.
+			ps.setInt(1, user);
+			ps.setString(2, pw);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					employee = new Employee(user, pw);
+				}
+			}
+		} catch (SQLException e) {
+			// Handle SQL error.
+			e.printStackTrace();
+		}
+		return employee;
 	}
-
 
 	@Override
 	public void disconnect() {
@@ -92,31 +90,71 @@ public class DaoImplJDBC implements Dao {
 
 	@Override
 	public boolean writeInventory(ArrayList<Product> inventory) {
-		return true;
+		String insertQuery = "INSERT INTO historical_inventory (id_product, name, wholesalerPrice, available, stock, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+
+		try (PreparedStatement ps = connection.prepareStatement(insertQuery)) {
+			int totalUpdated = 0;
+			for (Product product : inventory) {
+				ps.setInt(1, product.getId());
+				ps.setString(2, product.getName());
+				ps.setDouble(3, product.getWholesalerPrice().getValue());
+				ps.setBoolean(4, product.isAvailable());
+				ps.setInt(5, product.getStock());
+				ps.setTimestamp(6, new java.sql.Timestamp(System.currentTimeMillis()));
+
+				int rowsUpdated = ps.executeUpdate();
+				totalUpdated += rowsUpdated;
+			}
+
+			return totalUpdated == inventory.size();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
-	public void insert(Product product) {
-		// TODO Auto-generated method stub
+	public void addProduct(Product product) {
+		String insertQuery = "INSERT INTO inventory (name, wholesalerPrice, available, stock) VALUES (?, ?, ?, ?)";
 
+		try (PreparedStatement ps = connection.prepareStatement(insertQuery)) {
+			ps.setString(1, product.getName());
+			ps.setDouble(2, product.getWholesalerPrice().getValue());
+			ps.setBoolean(3, product.isAvailable());
+			ps.setInt(4, product.getStock());
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void update(String id) {
-		// TODO Auto-generated method stub
+	public void updateProduct(Product product) {
+		String updateQuery = "UPDATE inventory SET stock = ? WHERE id = ?";
 
+		try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
+			;
+			ps.setInt(1, product.getStock());
+			ps.setInt(2, product.getId());
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void delete(String id) {
-		// TODO Auto-generated method stub
+	public void deleteProduct(int productId) {
+		String deleteQuery = "DELETE FROM inventory WHERE id = ?";
 
-	}
+		try (PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
+			ps.setInt(1, productId);
 
-	@Override
-	public boolean exists(int id, Statement stmt) {
-		// TODO Auto-generated method stub
-		return false;
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
