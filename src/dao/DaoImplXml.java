@@ -78,7 +78,7 @@ public class DaoImplXml implements Dao {
 	}
 
 	@Override
-	public void deleteProduct(int productId) {
+	public void deleteProduct(Product product) {
 		// TODO Auto-generated method stub
 
 	}

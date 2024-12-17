@@ -373,8 +373,8 @@ public class Shop {
 	}
 
 	// Method used to delete product in the database
-	public void deleteProduct(int productId) {
-		dao.deleteProduct(productId);
+	public void deleteProduct(Product product) {
+		dao.deleteProduct(product);
 	}
 
 	// Add a sale to the log

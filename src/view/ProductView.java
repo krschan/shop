@@ -201,7 +201,7 @@ public class ProductView extends JDialog implements ActionListener {
 				shop.showInventory();
 
 				// Delete product in the database
-				shop.deleteProduct(product.getId());
+				shop.deleteProduct(product);
 			} else {
 				// Error message
 				JOptionPane.showMessageDialog(this, "Product does not exist.", "Error", JOptionPane.ERROR_MESSAGE);

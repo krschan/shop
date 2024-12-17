@@ -145,11 +145,11 @@ public class DaoImplJDBC implements Dao {
 	}
 
 	@Override
-	public void deleteProduct(int productId) {
+	public void deleteProduct(Product product) {
 		String deleteQuery = "DELETE FROM inventory WHERE id = ?";
 
 		try (PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
-			ps.setInt(1, productId);
+			ps.setInt(1, product.getId());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
