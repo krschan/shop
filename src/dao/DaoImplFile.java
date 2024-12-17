@@ -15,108 +15,118 @@ import model.Product;
 
 public class DaoImplFile implements Dao {
 
-	@Override
-	public void connect() {
-		// TODO Auto-generated method stub
+    @Override
+    public void connect() {
+        // TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public Employee getEmployee(int user, String pw) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public Employee getEmployee(int user, String pw) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void disconnect() {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public void disconnect() {
-		// TODO Auto-generated method stub
+    @Override
+    public ArrayList<Product> getInventory() {
 
-	}
+        ArrayList<Product> inventory = new ArrayList<Product>();
 
-	@Override
-	public ArrayList<Product> getInventory() {
+        try {
 
-		ArrayList<Product> inventory = new ArrayList<Product>();
+            File file = new File("./files/inputInventory.txt");
 
-		try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String initialInventory = bufferedReader.readLine();
 
-			File file = new File("./files/inputInventory.txt");
+            while (initialInventory != null) {
 
-			FileReader fileReader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			String initialInventory = bufferedReader.readLine();
+                String[] line = initialInventory.split(";");
 
-			while (initialInventory != null) {
+                // Product name
+                String split0 = line[0];
+                String[] productSplit = split0.split(":");
+                String name = productSplit[1];
 
-				String[] line = initialInventory.split(";");
+                // Wholesaler price
+                String split1 = line[1];
+                String[] wholesalerSplit = split1.split(":");
+                float wholesalerPrice = Float.parseFloat(wholesalerSplit[1]);
 
-				// Product name
-				String split0 = line[0];
-				String[] productSplit = split0.split(":");
-				String name = productSplit[1];
+                // Public price
+                float publicPrice = wholesalerPrice * 2;
 
-				// Wholesaler price
-				String split1 = line[1];
-				String[] wholesalerSplit = split1.split(":");
-				float wholesalerPrice = Float.parseFloat(wholesalerSplit[1]);
+                // Stock
+                String split2 = line[2];
+                String[] stockSplit = split2.split(":");
+                int stock = Integer.parseInt(stockSplit[1]);
 
-				// Public price
-				float publicPrice = wholesalerPrice * 2;
+                inventory.add(new Product(name, wholesalerPrice, publicPrice, true, stock));
 
-				// Stock
-				String split2 = line[2];
-				String[] stockSplit = split2.split(":");
-				int stock = Integer.parseInt(stockSplit[1]);
+                initialInventory = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+            return inventory;
 
-				inventory.add(new Product(name, wholesalerPrice, publicPrice, true, stock));
+        } catch (java.io.IOException e) {
+            System.out.println("There was a problem with the file.");
+            return null;
+        }
+    }
 
-				initialInventory = bufferedReader.readLine();
+    @Override
+    public boolean writeInventory(ArrayList<Product> inventory) {
+        Scanner sc = new Scanner(System.in);
 
-			}
-			bufferedReader.close();
-			return inventory;
+        try {
+            // Create date & time object
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formattedDate = dateTime.format(myFormatObj);
 
-		} catch (java.io.IOException e) {
-			System.out.println("Ha habido un problema con el fichero.");
-			return null;
-		}
-	}
+            // Export data to a file
+            File file = new File("files/inventory_" + formattedDate + ".txt");
+            file.createNewFile();
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
 
-	@Override
-	public boolean writeInventory(ArrayList<Product> inventory) {
-		Scanner sc = new Scanner(System.in);
+            int productNumber = 1;
 
-		try {
-			// Create date & time object
-			LocalDateTime dateTime = LocalDateTime.now();
-			DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			String formattedDate = dateTime.format(myFormatObj);
+            for (Product item : inventory) {
+                writer.write(productNumber + ";Product:" + item.getName() + ";" + "Stock:" + item.getStock() + ";\n");
 
-			// Export data to a file
-			File file = new File("files/inventory_" + formattedDate + ".txt");
-			file.createNewFile();
-			FileWriter fileWriter = new FileWriter(file, true);
-			BufferedWriter writer = new BufferedWriter(fileWriter);
+                productNumber++;
+            }
 
-			int productNumber = 1;
+            writer.write("Total number of products:" + productNumber);
 
-			for (Product item : inventory) {
-				writer.write(
-						productNumber + ";Product:" + item.getName() + ";" + "Stock:" + item.getStock() + ";\n");
+            System.out.println("The inventory has been created in a file.");
+            writer.close();
+            return true;
 
-				productNumber++; 
-			}
+        } catch (java.io.IOException e) {
+            System.out.println("There was a problem with the file.");
+            return false;
+        }
+    }
 
-			writer.write("Número total de productos:" + productNumber);
+    @Override
+    public void updateProduct(Product product) {
+        // TODO Auto-generated method stub
+    }
 
-			System.out.println("El inventario ha sido creado en un fichero.");
-			writer.close();
-			return true;
+    @Override
+    public void addProduct(Product product) {
+        // TODO Auto-generated method stub
+    }
 
-		} catch (java.io.IOException e) {
-			System.out.println("Ha habido un problema con el fichero.");
-			return false;
-		}
-	}
-
+    @Override
+    public void deleteProduct(int productId) {
+        // TODO Auto-generated method stub
+    }
 }

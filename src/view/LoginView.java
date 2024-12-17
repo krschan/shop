@@ -115,7 +115,7 @@ public class LoginView extends JFrame implements ActionListener {
 		counter++;
 
 		try {
-			// It shows an error if user made 3 attempts
+			// It shows an error if user made 3 attempts.
 			if (counter == MAX_COUNTER && !login) {
 				throw new LimitLoginException();
 			}
@@ -126,7 +126,7 @@ public class LoginView extends JFrame implements ActionListener {
 				login = employee.login(employeeNumber, password);
 
 				if (!login) {
-					JOptionPane.showMessageDialog(this, "Error. Cuenta no válida. Intentos: " + counter + "/3");
+					JOptionPane.showMessageDialog(this, "Error. Invalid account. Attempts: " + counter + "/3");
 					login = true;
 					userTextField.setText(null);
 					passwordTextField.setText(null);
@@ -137,22 +137,19 @@ public class LoginView extends JFrame implements ActionListener {
 				}
 			}
 		} catch (LimitLoginException limitLoginEx) {
-			// Show error dialog
+			// Show error dialog.
 			JOptionPane.showMessageDialog(LoginView.this, limitLoginEx.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			dispose();
 		} catch (NumberFormatException numberFormatEx) {
-			// Show error dialog
-			JOptionPane.showMessageDialog(null, "Formato no correcto. Empleado tiene que ser numérico.", "Error", JOptionPane.ERROR_MESSAGE);
-			dispose();
+			// Show error dialog.
+			JOptionPane.showMessageDialog(null, "Incorrect format. Employee must...");
 		}
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent interactionButton) {
-		if (interactionButton.getSource() == loginButton) {
-			validLogin();
-		}
-
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

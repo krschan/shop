@@ -5,12 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import main.Shop;
+import model.Product;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -28,7 +30,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener {
 	private JButton addStockButton;
 	private JButton deleteProductButton;
 	private Shop shop;
-	private JTextField txtGenerandoPixeles;
+	private JTextField txtGeneratingPixels;
 	private JButton exportInventoryButton;
 
 	/**
@@ -71,30 +73,30 @@ public class ShopView extends JFrame implements ActionListener, KeyListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
 
-		JLabel optionLabel = new JLabel("Seleccione una opción:");
+		JLabel optionLabel = new JLabel("Select an option:");
 		contentPane.add(optionLabel);
-		
-		exportInventoryButton = new JButton("0. Exportar inventario");
+
+		exportInventoryButton = new JButton("0. Export Inventory");
 		contentPane.add(exportInventoryButton);
-		
-		showCashButton = new JButton("1. Contar caja");
+
+		showCashButton = new JButton("1. Count Cash");
 		contentPane.add(showCashButton);
 
-		addProductButton = new JButton("2. Añadir producto");
+		addProductButton = new JButton("2. Add Product");
 		contentPane.add(addProductButton);
 
-		addStockButton = new JButton("3. Añadir stock");
+		addStockButton = new JButton("3. Add Stock");
 		contentPane.add(addStockButton);
-		
-		deleteProductButton = new JButton("9. Eliminar producto");
+
+		deleteProductButton = new JButton("9. Delete Product");
 		contentPane.add(deleteProductButton);
-		
-		txtGenerandoPixeles = new JTextField();
-		txtGenerandoPixeles.setHorizontalAlignment(SwingConstants.CENTER);
-		txtGenerandoPixeles.setEditable(false);
-		txtGenerandoPixeles.setText("Generando pixeles...");
-		contentPane.add(txtGenerandoPixeles);
-		txtGenerandoPixeles.setColumns(10);
+
+		txtGeneratingPixels = new JTextField();
+		txtGeneratingPixels.setHorizontalAlignment(SwingConstants.CENTER);
+		txtGeneratingPixels.setEditable(false);
+		txtGeneratingPixels.setText("Generating pixels...");
+		contentPane.add(txtGeneratingPixels);
+		txtGeneratingPixels.setColumns(10);
 
 		exportInventoryButton.addActionListener(this);
 		showCashButton.addActionListener(this);
@@ -102,15 +104,17 @@ public class ShopView extends JFrame implements ActionListener, KeyListener {
 		addStockButton.addActionListener(this);
 		deleteProductButton.addActionListener(this);
 
-		// detect when user uses a key on the frame.
+		// Detect when user uses a key on the frame.
 		this.addKeyListener(this);
 	}
-	
+
 	public void exportInventory() {
-		if(!shop.writeInventory()) {
-			JOptionPane.showMessageDialog(this, "Error exportando el inventario.", "Error", JOptionPane.ERROR_MESSAGE);
+		// Check if the inventory was saved in XML format.
+		if (!shop.writeInventory()) {
+			JOptionPane.showMessageDialog(this, "Error exporting the inventory.", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(this, "Inventario exportado correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Inventory exported successfully", "Information",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

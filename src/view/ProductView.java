@@ -82,7 +82,7 @@ public class ProductView extends JDialog implements ActionListener {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		productLabel = new JLabel("Nombre producto:");
+		productLabel = new JLabel("Product Name:");
 		productLabel.setBounds(92, 79, 139, 13);
 		contentPanel.add(productLabel);
 
@@ -91,7 +91,7 @@ public class ProductView extends JDialog implements ActionListener {
 		contentPanel.add(productTextField);
 		productTextField.setColumns(10);
 
-		stockLabel = new JLabel("Stock producto:");
+		stockLabel = new JLabel("Product Stock:");
 		stockLabel.setBounds(92, 102, 141, 13);
 		contentPanel.add(stockLabel);
 
@@ -100,7 +100,7 @@ public class ProductView extends JDialog implements ActionListener {
 		contentPanel.add(stockTextField);
 		stockTextField.setColumns(10);
 
-		priceLabel = new JLabel("Precio producto:");
+		priceLabel = new JLabel("Product Price:");
 		priceLabel.setBounds(92, 125, 134, 13);
 		contentPanel.add(priceLabel);
 
@@ -147,7 +147,7 @@ public class ProductView extends JDialog implements ActionListener {
 			// Check if product already exists
 			if (product != null) {
 				// Error message
-				JOptionPane.showMessageDialog(this, "Producto ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Product already exists.", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				// Add product
 				shop.addProduct(new Product(productName, wholesalerPrice, publicPrice, true, stock));
@@ -155,7 +155,7 @@ public class ProductView extends JDialog implements ActionListener {
 			}
 
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Error en los campos de texto.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error in text fields.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -174,13 +174,15 @@ public class ProductView extends JDialog implements ActionListener {
 			if (product != null) {
 				// Update stock product
 				product.setStock(stock + product.getStock());
+				// Update stock product in the database
+				shop.updateProduct(product);
 				shop.showInventory();
 			} else {
-				JOptionPane.showMessageDialog(this, "Producto no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Product does not exist.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Error en los campos de texto.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error in text fields.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -197,13 +199,16 @@ public class ProductView extends JDialog implements ActionListener {
 				inventory = shop.getInventory();
 				inventory.remove(product);
 				shop.showInventory();
+
+				// Delete product in the database
+				shop.deleteProduct(product.getId());
 			} else {
 				// Error message
-				JOptionPane.showMessageDialog(this, "Producto no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Product does not exist.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Error en los campos de texto.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error in text fields.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
