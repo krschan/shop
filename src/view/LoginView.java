@@ -138,7 +138,8 @@ public class LoginView extends JFrame implements ActionListener {
 			}
 		} catch (LimitLoginException limitLoginEx) {
 			// Show error dialog.
-			JOptionPane.showMessageDialog(LoginView.this, limitLoginEx.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(LoginView.this, limitLoginEx.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
 			dispose();
 		} catch (NumberFormatException numberFormatEx) {
 			// Show error dialog.
@@ -147,9 +148,10 @@ public class LoginView extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent interactionButton) {
+		if (interactionButton.getSource() == loginButton) {
+			validLogin();
+		}
 	}
 
 }
