@@ -46,11 +46,29 @@ public class DaoImplJaxb implements Dao {
 	public boolean writeInventory(ArrayList<Product> inventory) {
 		JaxbMarshaller jaxbMarshaller = new JaxbMarshaller();
 		ProductList productList = new ProductList();
-		
+
 		productList.setProducts(inventory);
 		boolean success = jaxbMarshaller.init(productList);
-		
+
 		return success;
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteProduct(int productId) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

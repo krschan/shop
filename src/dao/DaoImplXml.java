@@ -14,12 +14,12 @@ import dao.xml.DomWriter;
 import model.Employee;
 import model.Product;
 
-public class DaoImplXml implements Dao{
+public class DaoImplXml implements Dao {
 
 	@Override
 	public void connect() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -31,22 +31,22 @@ public class DaoImplXml implements Dao{
 	@Override
 	public void disconnect() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public ArrayList<Product> getInventory() {
 		ArrayList<Product> inventory = new ArrayList<Product>();
-		
+
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser;
 		try {
 			parser = factory.newSAXParser();
-			File file = new File ("./xml/inputInventory.xml");
+			File file = new File("./xml/inputInventory.xml");
 			dao.xml.SaxReader saxReader = new dao.xml.SaxReader();
 			parser.parse(file, saxReader);
 			inventory = saxReader.getProducts();
-			
+
 		} catch (ParserConfigurationException | SAXException e) {
 			System.out.println("ERROR creating the parser");
 			return null;
@@ -59,10 +59,28 @@ public class DaoImplXml implements Dao{
 
 	@Override
 	public boolean writeInventory(ArrayList<Product> inventory) {
-		//Create a new xml document
-	    DomWriter domWriter = new DomWriter();
-	    boolean success = domWriter.generateDocument(inventory);
-	    return success;
+		// Create a new xml document
+		DomWriter domWriter = new DomWriter();
+		boolean success = domWriter.generateDocument(inventory);
+		return success;
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteProduct(int productId) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
