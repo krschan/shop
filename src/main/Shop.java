@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 import dao.Dao;
 import dao.DaoImplJDBC;
+import manager.Hibernate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -39,6 +41,8 @@ public class Shop {
 	// private Dao dao = new DaoImplXml();
 
 	public static void main(String[] args) {
+		(new Hibernate()).init();
+		
 		Shop shop = new Shop();
 
 		// Load inventory
