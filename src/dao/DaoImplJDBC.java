@@ -67,7 +67,6 @@ public class DaoImplJDBC implements Dao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
@@ -135,12 +134,11 @@ public class DaoImplJDBC implements Dao {
 
 	@Override
 	public void updateProduct(Product product) {
-		String updateQuery = "UPDATE inventory SET stock = ? WHERE id = ?";
+		String updateQuery = "UPDATE inventory SET stock = ? WHERE name = ?";
 
 		try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
-			;
 			ps.setInt(1, product.getStock());
-			ps.setInt(2, product.getId());
+			ps.setString(2, product.getName());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
