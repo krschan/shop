@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.Dao;
-import dao.DaoImplJDBC;
-import manager.Hibernate;
+import dao.DaoImplHibernate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,8 +27,11 @@ public class Shop {
 
 	final static double TAX_RATE = 1.04;
 
+	// Connection using Hibernate.
+	private Dao dao = new DaoImplHibernate();
+
 	// Connection using JDBC.
-	private Dao dao = new DaoImplJDBC();
+	// private Dao dao = new DaoImplJDBC();
 
 	// Connection using Jaxb.
 	// private Dao dao = new DaoImplJaxb();
@@ -41,8 +43,6 @@ public class Shop {
 	// private Dao dao = new DaoImplXml();
 
 	public static void main(String[] args) {
-		(new Hibernate()).init();
-		
 		Shop shop = new Shop();
 
 		// Load inventory
@@ -159,7 +159,7 @@ public class Shop {
 		// Calculate Public Price
 		double publicPrice = wholesalerPrice * 2;
 
-		addProduct(new Product(name, wholesalerPrice, publicPrice, true, stock));
+		addProduct(new Product(true, name, wholesalerPrice, stock));
 	}
 
 	// (CASE 3) Add stock for a specific product
