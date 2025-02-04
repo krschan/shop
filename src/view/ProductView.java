@@ -150,7 +150,7 @@ public class ProductView extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Product already exists.", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				// Add product
-				shop.addProduct(new Product(productName, wholesalerPrice, publicPrice, true, stock));
+				shop.addProduct(new Product(true, productName, wholesalerPrice, stock));
 				shop.showInventory();
 			}
 
