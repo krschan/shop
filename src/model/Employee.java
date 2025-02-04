@@ -6,11 +6,12 @@ import main.Logable;
 
 public class Employee extends Person implements Logable {
 
-	// hardcorded version
+	// Hardcoded version to enter the shop menu.
 //	private final static int USER = 123;
 //	private final static String PASSWORD = "test";
 //	private int employeeId = USER;
 
+	// Connection using JDBC.
 	public Dao dao = new DaoImplJDBC();
 
 	public Employee() {
