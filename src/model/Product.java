@@ -93,16 +93,6 @@ public class Product {
 		this.stock = stock;
 	}
 
-	// Hibernate.
-	public Product(int id, boolean available, String name, double price, int stock) {
-		super();
-		this.id = id;
-		this.available = available;
-		this.name = name;
-		this.price = price;
-		this.stock = stock;
-	}
-
 	// Getters and setters.
 	@XmlAttribute(name = "id")
 	public int getId() {
@@ -186,8 +176,18 @@ public class Product {
 		double valueExpire = this.getPublicPrice().getValue() * EXPIRATION_RATE;
 		this.publicPrice.setValue(valueExpire);
 	}
+	
+	// Method to calculate wholesalerPrice and publicPrice in Hibernate.
+    public void initializePrices() {
+        if (this.wholesalerPrice == null) {
+            this.wholesalerPrice = new Amount(this.price);
+        }
+        if (this.publicPrice == null) {
+            this.publicPrice = new Amount(this.wholesalerPrice.getValue() * 2);
+        }
+    }
 
-	// Method to calculate price public.
+	// Method to calculate publicPrice in JAXB.
 	public void publicPriceCalculate() {
 		// Check if wholesalerPrice is not zero
 		if (this.wholesalerPrice != null) {
