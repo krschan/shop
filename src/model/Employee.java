@@ -1,7 +1,7 @@
 package model;
 
 import dao.Dao;
-import dao.DaoImplJDBC;
+import dao.DaoImplMongoDB;
 import main.Logable;
 
 public class Employee extends Person implements Logable {
@@ -12,7 +12,7 @@ public class Employee extends Person implements Logable {
 //	private int employeeId = USER;
 
 	// Connection using JDBC.
-	public Dao dao = new DaoImplJDBC();
+	public Dao dao = new DaoImplMongoDB();
 
 	public Employee() {
 	}
