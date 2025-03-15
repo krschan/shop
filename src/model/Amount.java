@@ -5,37 +5,43 @@ import javax.xml.bind.annotation.XmlValue;
 
 public class Amount {
 	private double value;
-	final private String currency = "â‚¬";
-	
+	private String currency = "€";
+
 	public Amount() {
-		
 	}
-	
+
 	public Amount(double value) {
-		super();
 		this.value = value;
 	}
-	
+
+	public Amount(double value, String currency) {
+		this.value = value;
+		this.currency = currency;
+	}
+
 	@XmlValue
 	public double getValue() {
 		return value;
 	}
-	
+
 	public void setValue(double value) {
 		this.value = value;
 	}
-	
+
 	@XmlAttribute(name = "currency")
-	public String getCurreny() {
+	public String getCurrency() {
 		return currency;
 	}
-	
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	@Override
 	public String toString() {
 		return value + currency;
 	}
-	
-	
 }
+
 
 
