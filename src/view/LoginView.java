@@ -143,7 +143,7 @@ public class LoginView extends JFrame implements ActionListener {
 			dispose();
 		} catch (NumberFormatException numberFormatEx) {
 			// Show error dialog.
-			JOptionPane.showMessageDialog(null, "Incorrect format. Employee must...");
+			JOptionPane.showMessageDialog(null, "Incorrect format.");
 		}
 	}
 
