@@ -23,7 +23,6 @@ public class Employee extends Person implements Logable {
 	public boolean login(int user, String password) {
 		dao.connect();
 		Employee employee = dao.getEmployee(user, password);
-		dao.disconnect();
 		return employee != null;
 	}
 }
